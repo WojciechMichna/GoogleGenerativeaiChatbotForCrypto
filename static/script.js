@@ -36,7 +36,6 @@ function uploadFile(file, bubble, img_element) {
     .then(data => {
         if (data.success) {
             console.log('File uploaded successfully');
-            bubble.dataset.fileName = data.jpg_file;
             img_element.src = '/images/' + data.jpg_file;
         } else {
             console.error('File upload failed');
@@ -45,6 +44,13 @@ function uploadFile(file, bubble, img_element) {
     .catch(error => {
         console.error('Error:', error);
     });
+}
+
+function handleRemoveButtonClick(event) {
+  const container = event.target.closest('.image-container');
+  if (container) {
+    container.remove(); // Remove the entire container
+  }
 }
 
 // Handle file drop
@@ -58,24 +64,33 @@ function handleDrop(event) {
         const bubbleParent = bubble.parentNode;
 
         // Remove previous file display (optional)
+        /*
         const previousDisplay = bubbleParent.querySelector('.image-miniature, .file-icon');
         if (previousDisplay) {
             previousDisplay.remove();
         }
+        */
 
         bubble.dataset.fileName = file.name; // Store the file name in a data attribute
 
         if (file.type.startsWith('image/')) {
             // Create an image element for the miniature
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'image-container';
+
             const img = document.createElement('img');
             img.className = 'image-miniature';
             img.src = URL.createObjectURL(file); // Generate a temporary URL for the image
-            bubbleParent.insertBefore(img, bubbleParent.firstChild);
+
+            imageContainer.appendChild(img);
 
             const removeButton = document.createElement('button');
             removeButton.className = 'remove-button';
             removeButton.textContent = 'X';
-            bubbleParent.insertBefore(removeButton, bubbleParent.firstChild.nextSibling);
+            removeButton.addEventListener('click', handleRemoveButtonClick);
+
+            imageContainer.appendChild(removeButton);
+            bubbleParent.insertBefore(imageContainer, bubbleParent.firstChild);
 
             uploadFile(file, bubble, img);
         }
@@ -84,7 +99,7 @@ function handleDrop(event) {
 
 // Collect data from all bubbles and send it
 function sendData() {
-    const bubbles = document.querySelectorAll('.bubble:not(.green)');
+    const bubbles = document.querySelectorAll('.bubble:not(.function_bubble)');
     const data = [];
 
     const overlay = document.getElementById('darkOverlay');
@@ -93,13 +108,20 @@ function sendData() {
     bubbles.forEach((bubble) => {
         const text = bubble.textContent.trim();
         const fileName = bubble.dataset.fileName || null;
+        var files = [];
+        bubble.parentElement.querySelectorAll('img').forEach((img) => {
+          const fullPath = img.src; // Full URL
+          const fileName = fullPath.split('/').pop(); // Extract the file name
+          files.push(fileName);
+        });
 
         data.push({
             type: bubble.classList.contains('blue') ? 'user' : 'model',
             text: text,
-            file: fileName,
+            files: files,
         });
     });
+
     const jsonData = JSON.stringify(data);
     // Send data to the server
     fetch('/send', {

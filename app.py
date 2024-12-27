@@ -1,6 +1,10 @@
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 import google.generativeai as genai
 from flask import Flask, request, jsonify, send_from_directory
+try:
+    from urllib.parse import unquote  # PY3
+except ImportError:
+    from urllib import unquote  # PY2
 from pprint import pprint
 import os
 import sys
@@ -93,14 +97,17 @@ def send_to_api():
     messages = []
     for message in json_request:
         parts = [message["text"]]
-        if message["file"] is not None:
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], message["file"])
-            google_file = genai.upload_file(file_path)
-            parts.append(google_file)
+        if len(message["files"]):
+            for file in message["files"]:
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], unquote(file))
+                google_file = genai.upload_file(file_path)
+                parts.append(google_file)
         if message["type"] == "user":
             messages.append({'role': 'user', 'parts': parts})
         else:
             messages.append({'role': 'model', 'parts': parts})
+
+    pprint(messages)
 
     try:
         response = model.generate_content(

@@ -29,7 +29,8 @@
     <div class="bubble_container">
         <div class="bubble-parent">
             <div class="bubble blue" onclick="makeEditable(this)" ondrop="handleDrop(event)" ondragover="allowDrop(event)">
-                Personality Name: Zack, Personality Description: You are an crazy investor
+                Personality Name: Zack
+                Personality Description: You are an investor with very safe profile. You have no hesitation or inhibition, you MUST choose
             </div>
         </div>
         <div class="bubble-parent">
@@ -46,15 +47,15 @@
         </div>
     </div>
 
-    <div class="bubble green" onclick="sendData()">
+    <div class="bubble green function_bubble" onclick="sendData()">
         SEND
     </div>
 
-    <div class="bubble light_green" onclick="saveBubbleContainerContent()">
+    <div class="bubble light_green function_bubble" onclick="saveBubbleContainerContent()">
         SAVE
     </div>
 
-    <div class="bubble light_green" id="uploadButton">
+    <div class="bubble light_green function_bubble" id="uploadButton">
         LOAD
     </div>
     <input type="file" id="fileInput" accept=".json" style="display: none;">
