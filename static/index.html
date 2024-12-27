@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable and Droppable Bubbles</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+
+<template id="my-template">
+    <div class="bubble-parent">
+        <span onclick="removeBubbles(this)" class="remove-btn">X</span>
+        <div class="bubble gray" onclick="makeEditable(this)">
+            Click to edit (Gray)
+        </div>
+    </div>
+    <div class="bubble-parent">
+        <div class="bubble blue" onclick="makeEditable(this)" ondrop="handleDrop(event)" ondragover="allowDrop(event)">
+            Click to edit or drop a file
+        </div>
+    </div>
+</template>
+      <!-- Overlay Element -->
+      <div id="darkOverlay">
+        <span>LOADING</span>
+      </div>
+
+    <div class="bubble_container">
+        <div class="bubble-parent">
+            <div class="bubble blue" onclick="makeEditable(this)" ondrop="handleDrop(event)" ondragover="allowDrop(event)">
+                Personality Name: Zack, Personality Description: You are an crazy investor
+            </div>
+        </div>
+        <div class="bubble-parent">
+            <span onclick="removeBubbles(this)" class="remove-btn">X</span>
+            <div class="bubble gray" onclick="makeEditable(this)">
+                Okay. From now on, I shall play the role of Zack. Your prompt and described personalit
+                will be used for the rest of the conversation.
+            </div>
+        </div>
+        <div class="bubble-parent">
+            <div class="bubble blue" onclick="makeEditable(this)" ondrop="handleDrop(event)" ondragover="allowDrop(event)">
+                Describe the picture like you are the one on the picture
+            </div>
+        </div>
+    </div>
+
+    <div class="bubble green" onclick="sendData()">
+        SEND
+    </div>
+
+    <div class="bubble light_green" onclick="saveBubbleContainerContent()">
+        SAVE
+    </div>
+
+    <div class="bubble light_green" id="uploadButton">
+        LOAD
+    </div>
+    <input type="file" id="fileInput" accept=".json" style="display: none;">
+    <script src="static/script.js"></script>
+</body>
+</html>

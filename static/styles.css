@@ -1,0 +1,157 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.bubble {
+    padding: 10px 20px;
+    color: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    transition: box-shadow 0.3s ease;
+    margin: 10px;
+    position: relative;
+    min-width: 300px;
+    text-align: center;
+    display: block;
+    clear: both; /* Forces the image to be below any text */
+    max-width: 800px;
+}
+
+/* Blue Bubble */
+.bubble.blue {
+    background-color: #007BFF;
+}
+
+.bubble.blue:focus {
+    box-shadow: 0 0 0 2px #0056b3;
+    background-color: #0056b3;
+}
+
+/* Gray Bubble */
+.bubble.gray {
+    background-color: #6c757d;
+}
+
+.bubble.gray:focus {
+    box-shadow: 0 0 0 2px #494e52;
+    background-color: #494e52;
+}
+
+/* Green Bubble */
+.bubble.green {
+    background-color: #28a745;
+}
+
+.bubble.light_green {
+    background-color: #34ebc3;
+}
+
+.bubble.green:focus {
+    box-shadow: 0 0 0 2px #1c7430;
+    background-color: #1c7430;
+}
+
+.bubble.light_green:focus {
+    box-shadow: 0 0 0 2px #1d826c;
+    background-color: #1c7430;
+}
+
+/* Image Miniature */
+.image-miniature {
+    margin-top: 10px;
+    max-width: 400px;
+    max-height: 400px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    object-fit: cover;
+}
+
+/* Default File Icon */
+.file-icon {
+    margin-top: 10px;
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+    border: 1px solid #aaa;
+}
+
+.bubble-parent {
+    position: relative; /* Ensure the container is the reference point for positioning the button */
+}
+
+.remove-btn {
+    display: inline-block;
+    background-color: red;
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: -15px; /* Adjust the top value to make it a little over the second div */
+    right: 10px; /* Adjust as needed */
+    z-index: 1;  /* Ensures the button is above the other div */
+}
+
+/* Styles for the overlay */
+#darkOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+  display: none; /* Hidden by default */
+  z-index: 9999; /* Ensure it appears above other elements */
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style for the loading text */
+#darkOverlay span {
+  color: white;
+  font-size: 2rem;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+.remove-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  background-color: darkred;
+}
