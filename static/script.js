@@ -195,6 +195,33 @@ function saveBubbleContainerContent() {
     URL.revokeObjectURL(downloadLink.href);
 }
 
+function loadAndRestoreBubbleContainerFromJson(json) {
+    try {
+        const jsonData = JSON.parse(json); // Parse the JSON
+        if (!jsonData.save) {
+            console.error('Invalid JSON: Missing "save" property.');
+            return;
+        }
+
+        const htmlContent = jsonData.save; // Extract the "save" property
+
+        // Find or create a bubble_container div
+        let bubbleContainer = document.querySelector('.bubble_container');
+        if (!bubbleContainer) {
+            bubbleContainer = document.createElement('div');
+            bubbleContainer.className = 'bubble_container';
+            document.body.appendChild(bubbleContainer); // Append to body if it doesn't exist
+        }
+
+        // Restore the HTML content
+        bubbleContainer.innerHTML = htmlContent;
+
+        console.log('HTML content restored successfully.');
+    } catch (error) {
+        console.error('Error parsing JSON file:', error);
+    }
+}
+
 function loadAndRestoreBubbleContainer(event) {
     const file = event.target.files[0]; // Get the uploaded file
 
@@ -207,30 +234,7 @@ function loadAndRestoreBubbleContainer(event) {
 
     // Read the file content
     reader.onload = function(e) {
-        try {
-            const jsonData = JSON.parse(e.target.result); // Parse the JSON
-            if (!jsonData.save) {
-                console.error('Invalid JSON: Missing "save" property.');
-                return;
-            }
-
-            const htmlContent = jsonData.save; // Extract the "save" property
-
-            // Find or create a bubble_container div
-            let bubbleContainer = document.querySelector('.bubble_container');
-            if (!bubbleContainer) {
-                bubbleContainer = document.createElement('div');
-                bubbleContainer.className = 'bubble_container';
-                document.body.appendChild(bubbleContainer); // Append to body if it doesn't exist
-            }
-
-            // Restore the HTML content
-            bubbleContainer.innerHTML = htmlContent;
-
-            console.log('HTML content restored successfully.');
-        } catch (error) {
-            console.error('Error parsing JSON file:', error);
-        }
+        loadAndRestoreBubbleContainerFromJson(e.target.result);
     };
 
     reader.readAsText(file); // Read the file as text

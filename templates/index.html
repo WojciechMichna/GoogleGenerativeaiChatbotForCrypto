@@ -60,5 +60,10 @@
     </div>
     <input type="file" id="fileInput" accept=".json" style="display: none;">
     <script src="static/script.js"></script>
+    <script>
+        const defaultJson = "{{ default_json|safe }}";
+        console.log(defaultJson); // Logs the passed JSON
+        loadAndRestoreBubbleContainerFromJson(defaultJson);
+    </script>
 </body>
 </html>

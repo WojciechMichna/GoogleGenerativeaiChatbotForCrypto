@@ -95,6 +95,10 @@ body {
     position: relative; /* Ensure the container is the reference point for positioning the button */
 }
 
+.bubble_container {
+    max-width: 900px;
+}
+
 .remove-btn {
     display: inline-block;
     background-color: red;
